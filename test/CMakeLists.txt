@@ -1,0 +1,37 @@
+project(sha256calculator_tests)
+
+add_executable(sha256calculator_tests
+	  sha256calculator_tests.cpp
+)
+
+target_link_libraries(sha256calculator_tests sha256calc)
+
+set(TEST_TIMEOUT 1)
+
+add_test(test_no_params ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sha256calculator_tests)
+add_test(test_empty_string ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sha256calculator_tests "\n")
+
+add_test(test_string_1 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sha256calculator_tests "1\n")
+set_tests_properties(test_string_1 PROPERTIES PASS_REGULAR_EXPRESSION "6b86b273ff34fce19d6b804eff5a3f5747ada4eaa22f1d49c01e52ddb7875b4b")
+
+add_test(test_string_2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sha256calculator_tests "2\n")
+set_tests_properties(test_string_2 PROPERTIES PASS_REGULAR_EXPRESSION "d4735e3a265e16eee03f59718b9b5d03019c07d8b6c51f90da3a666eec13ab35")
+
+add_test(test_string_12 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sha256calculator_tests "12\n")
+set_tests_properties(test_string_12 PROPERTIES PASS_REGULAR_EXPRESSION "6b51d431df5d7f141cbececcf79edf3dd861c3b4069f0b11661a3eefacbba918")
+
+add_test(test_string_123 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sha256calculator_tests "123\n")
+set_tests_properties(test_string_123 PROPERTIES PASS_REGULAR_EXPRESSION "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3")
+
+add_test(test_multiple_strings ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sha256calculator_tests "123\n456\n")
+set_tests_properties(test_multiple_strings PROPERTIES PASS_REGULAR_EXPRESSION "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\nb3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0")
+
+add_test(test_multiple_strings_separate ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sha256calculator_tests "123" "\n456\n")
+set_tests_properties(test_multiple_strings_separate PROPERTIES PASS_REGULAR_EXPRESSION "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\nb3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0")
+
+add_test(test_multiple_strings_separate_2 ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/sha256calculator_tests "1" "23\n456" "\n")
+set_tests_properties(test_multiple_strings_separate_2 PROPERTIES PASS_REGULAR_EXPRESSION "a665a45920422f9d417e4867efdc4fb8a04a1f3fff1fa07e998e86f7f7a27ae3\nb3a8e0e1f9ab1bfe3a36f231f676f78bb30a519d2b21e6c530c0eee8ebb4a5d0")
+
+set_tests_properties(test_no_params test_empty_string test_string_1 test_string_2 test_string_12 test_string_123
+   PROPERTIES TIMEOUT ${TEST_TIMEOUT})
+

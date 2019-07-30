@@ -1,0 +1,6 @@
+[submodule "lib/asio"]
+	path = lib/asio
+	url = ../asio
+[submodule "lib/hash-library"]
+	path = lib/hash-library
+	url = ../hash-library

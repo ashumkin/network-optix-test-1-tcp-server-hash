@@ -1,0 +1,16 @@
+language: cpp
+
+compiler:
+      - gcc
+
+before_install:
+  - env
+  - export SRC_DIR="`pwd`"
+  - sudo apt update && sudo apt install ninja-build libboost-dev
+
+script:
+  - $CXX --version
+  - cmake --version
+  - cmake -GNinja .
+  - cmake --build .
+  - ctest .

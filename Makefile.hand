@@ -1,0 +1,26 @@
+CC=g++
+LDFLAGS=-g
+LDLIBS += -Iinclude
+LDLIBS += -Ilib/asio/asio/include
+LDLIBS += -Ilib/hash-library
+LDLIBS += -lpthread
+LDLIBS += -L.
+LDLIBS += -lsha256calc
+
+all: server
+
+libsha256calc.so: sha256calculator.o sha256.o
+	$(CC) -shared -fPIC $^ -o $@
+
+sha256calculator.o: sha256calc/sha256calculator.cpp
+	$(CC) -g -c -fPIC $^ -Ilib/hash-library -Iinclude -o $@
+
+sha256.o: lib/hash-library/sha256.cpp lib/hash-library/sha256.h
+	$(CC) -c -fPIC $< -o $@
+
+server: src/server.cpp libsha256calc.so
+	$(CC) $(LDFLAGS) $(LDLIBS) $< -o $@
+
+clean:
+	$(RM) *.o *.a *.so server
+	$(RM) build.ninja CMakeCache.txt CMakeFiles/ cmake_install.cmake
