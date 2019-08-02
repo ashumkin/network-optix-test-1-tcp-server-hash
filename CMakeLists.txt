@@ -23,7 +23,11 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY
     )
 
 enable_testing()
+
 include_directories(include lib/asio/asio/include lib/hash-library)
+IF (WIN32)
+    include_directories(lib\\boost_1_60_0 lib\\boost_1_60_0\\boost\\predef\\other)
+ENDIF()
 
 add_subdirectory(src build/src)
 add_subdirectory(test build/test)
