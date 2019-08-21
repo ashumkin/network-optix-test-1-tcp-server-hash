@@ -1,0 +1,26 @@
+language: cpp
+
+os:
+  - linux
+  - windows
+
+compiler:
+      - gcc
+
+git:
+  depth: 1
+
+before_install:
+  - env
+  - export SRC_DIR="`pwd`"
+  - if [ "$TRAVIS_OS_NAME" = "linux" ]; then sudo apt update && sudo apt install ninja-build libboost-dev; fi
+  - if [ "$TRAVIS_OS_NAME" = "windows" ]; then wget -q https://github.com/ninja-build/ninja/releases/download/v1.9.0/ninja-win.zip https://netcologne.dl.sourceforge.net/project/boost/boost/1.60.0/boost_1_60_0.zip && unzip ninja-win.zip && unzip -q -d lib boost_1_60_0.zip 'boost_1_60_0/boost/**'; fi
+
+script:
+  - $CXX --version
+  - cmake --version
+  - cmake -G || echo ""
+  - cmake -GNinja .
+  - cat CMakeFiles/CMakeOutput.log
+  - cmake --build .
+  - ctest .

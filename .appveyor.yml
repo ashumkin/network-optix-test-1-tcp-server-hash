@@ -1,0 +1,21 @@
+image: Visual Studio 2017
+
+platform: x86
+
+cache:
+    - lib\boost_1_60_0
+    - cache
+
+install:
+    - git submodule update --init
+    - if not exist cache ( md cache )
+#    - if not exist cache\boost_1_60_0-msvc-14.0-32.exe ( curl -fsSL -o cache/boost_1_60_0-msvc-14.0-32.exe https://sourceforge.net/projects/boost/files/boost-binaries/1.60.0/boost_1_60_0-msvc-14.0-32.exe/download )
+#    - if not exist lib\boost_1_60_0 ( cache\boost_1_60_0-msvc-14.0-32.exe /DIR=lib/boost_1_60_0 /VERYSILENT )
+    - if not exist cache\boost_1_60_0-x86-precompiled.7z ( curl -fsSL -o cache/boost_1_60_0-x86-precompiled.7z https://github.com/ashumkin/network-optix-test-1-tcp-server-hash/releases/download/0.0.0/boost_1_60_0-x86-precompiled.7z )
+    - if not exist lib\boost_1_60_0 ( 7z x cache\boost_1_60_0-x86-precompiled.7z -olib\boost_1_60_0 )
+
+build_script:
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
+    - cmake -GNinja .
+    - cmake --build .
+    - ctest .
