@@ -8,11 +8,12 @@ cache:
 
 install:
     - git submodule update --init
-    - prepare.cmd
+    - if not exist cache ( md cache )
+    - if not exist cache\boost_1_60_0-msvc-14.0-32.exe ( curl -fsSL -o cache/boost_1_60_0-msvc-14.0-32.exe https://sourceforge.net/projects/boost/files/boost-binaries/1.60.0/boost_1_60_0-msvc-14.0-32.exe/download )
+    - if not exist lib\boost_1_60_0 ( cache\boost_1_60_0-msvc-14.0-32.exe /DIR=lib/boost_1_60_0 /VERYSILENT )
 
 build_script:
     - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
-    - cmake -G
     - cmake -GNinja .
     - cmake --build .
     - ctest .
