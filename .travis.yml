@@ -7,6 +7,9 @@ os:
 compiler:
       - gcc
 
+git:
+  depth: 1
+
 before_install:
   - env
   - export SRC_DIR="`pwd`"
