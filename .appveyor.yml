@@ -1,0 +1,18 @@
+image: Visual Studio 2017
+
+platform: x86
+
+cache:
+    - lib\boost_1_60_0
+    - cache
+
+install:
+    - git submodule update --init
+    - prepare.cmd
+
+build_script:
+    - call "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\VC\Auxiliary\Build\vcvars32.bat"
+    - cmake -G
+    - cmake -GNinja .
+    - cmake --build .
+    - ctest .
