@@ -2,6 +2,8 @@ project(server)
 
 add_library(sha256 ../lib/hash-library/sha256.cpp)
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS 1)
+
 add_library(sha256calc SHARED ../sha256calc/sha256calculator.cpp)
 
 add_executable(server

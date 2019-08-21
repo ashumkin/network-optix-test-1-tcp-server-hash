@@ -26,7 +26,8 @@ enable_testing()
 
 include_directories(include lib/asio/asio/include lib/hash-library)
 IF (WIN32)
-    include_directories(lib\\boost_1_60_0 lib\\boost_1_60_0\\boost\\predef\\other)
+    include_directories(lib/boost_1_60_0 lib/boost_1_60_0/boost/predef/other)
+    link_directories(lib/boost_1_60_0/stage/lib)
 ENDIF()
 
 add_subdirectory(src build/src)
